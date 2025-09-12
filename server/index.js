@@ -9,14 +9,29 @@ const MONGO_STRING = process.env.MONGO_STRING
 const connectDB = async () => {
     try {
         await mongoose.connect(MONGO_STRING)
-        console.log('connected to db');
     } catch (error) {
-        console.log('error connecting to db: ', error)
-        throw error
+        console.log('Error connecting to db: ', error)
     }
 }
 
-server.listen(PORT, () => {
-    connectDB()
-    console.log(`server running on PORT ${PORT}`)
+mongoose.connection.on('disconnected', () => {
+    console.log('Connection to db lost. Retrying in 3 seconds...');
+    setTimeout(() => connectDB(), 3000);
 })
+
+let firstConnection = true;
+mongoose.connection.on('connected', () => {
+    if (firstConnection) {
+        console.log('Connected to db');
+        firstConnection = false;
+    } else {
+        console.log('Reconnected to db');
+    }
+});
+
+const startServer = async () => {
+    await connectDB()
+    server.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`)
+    })
+}
