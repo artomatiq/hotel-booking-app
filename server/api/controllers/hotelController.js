@@ -30,8 +30,19 @@ const getHotelById = async (req, res, next) => {
     }
 }
 
+const updateHotel = async (req, res, next) => {
+    try {
+        const id = req.params.id
+        const updatedHotel = await HotelModel.findByIdAndUpdate(id, req.body, {new: true})
+        res.status(200).json(updatedHotel)
+    } catch (err) {
+        next(err)
+    }
+}
+
 module.exports = {
     createHotel,
     getAllHotels,
-    getHotelById
+    getHotelById,
+    updateHotel
 }

@@ -1,6 +1,9 @@
 const express = require('express')
 const HotelModel = require('../models/Hotel')
-const {createHotel, getAllHotels, getHotelById} = require('../controllers/hotelController')
+const hotelController = require('../controllers/hotelController')
+
+
+const {createHotel, getAllHotels, getHotelById, updateHotel} = hotelController
 
 const router = express.Router()
 
@@ -14,15 +17,7 @@ router.get('/:id', getHotelById)
 router.post('/', createHotel)
 
 //update hotel
-router.put('/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        const updatedHotel = await HotelModel.findByIdAndUpdate(id, req.body, {new: true})
-        res.status(200).json(updatedHotel)
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
+router.put('/:id', updateHotel)
 
 //delete hotel
 router.delete('/:id', async (req, res) => {
