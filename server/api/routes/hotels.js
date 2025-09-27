@@ -1,5 +1,6 @@
 const express = require('express')
 const HotelModel = require('../models/Hotel')
+const {createHotel} = require('../controllers/hotelController')
 
 const router = express.Router()
 
@@ -25,16 +26,7 @@ router.get('/:id', async (req, res) => {
 })
 
 //create new hotel
-router.post('/', async (req, res) => {
-    const newHotel = new HotelModel(req.body)
-
-    try {
-        const savedHotel = await newHotel.save()
-        res.status(200).json(savedHotel)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-})
+router.post('/', createHotel)
 
 //update hotel
 router.put('/:id', async (req, res) => {
