@@ -1,18 +1,11 @@
 const express = require('express')
 const HotelModel = require('../models/Hotel')
-const {createHotel} = require('../controllers/hotelController')
+const {createHotel, getAllHotels} = require('../controllers/hotelController')
 
 const router = express.Router()
 
 //get all hotels
-router.get('/', async (req, res) => {
-    try {
-        const hotels = await HotelModel.find()
-        res.status(200).json(hotels)
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
+router.get('/', getAllHotels)
 
 //get single hotel
 router.get('/:id', async (req, res) => {
