@@ -40,9 +40,20 @@ const updateHotel = async (req, res, next) => {
     }
 }
 
+const deleteHotel = async (req, res, next) => {
+    try {
+        const id = req.params.id
+        await HotelModel.findByIdAndDelete(id)
+        res.status(200).json({message: 'hotel successfully deleted'})
+    } catch (err) {
+        next(err)
+    }
+}
+
 module.exports = {
     createHotel,
     getAllHotels,
     getHotelById,
-    updateHotel
+    updateHotel,
+    deleteHotel
 }

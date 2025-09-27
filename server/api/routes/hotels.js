@@ -3,7 +3,7 @@ const HotelModel = require('../models/Hotel')
 const hotelController = require('../controllers/hotelController')
 
 
-const {createHotel, getAllHotels, getHotelById, updateHotel} = hotelController
+const {createHotel, getAllHotels, getHotelById, updateHotel, deleteHotel} = hotelController
 
 const router = express.Router()
 
@@ -20,14 +20,6 @@ router.post('/', createHotel)
 router.put('/:id', updateHotel)
 
 //delete hotel
-router.delete('/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        await HotelModel.findByIdAndDelete(id)
-        res.status(200).json({message: 'hotel successfully deleted'})
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
+router.delete('/:id', deleteHotel)
 
 module.exports = router
