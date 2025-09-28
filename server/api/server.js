@@ -3,8 +3,11 @@ const authRoute = require('./routes/auth.js');
 const usersRoute = require('./routes/users.js');
 const hotelsRoute = require('./routes/hotels.js');
 const roomsRoute = require('./routes/rooms.js');
+const cookieParser = require('cookie-parser')
 
 const server = express()
+
+server.use(cookieParser())
 server.use(express.json())
 
 server.get('/', (req, res) => {
