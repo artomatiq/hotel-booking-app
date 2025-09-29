@@ -1,5 +1,4 @@
 const express = require('express')
-const HotelModel = require('../models/Hotel')
 const hotelController = require('../controllers/hotelController')
 
 
