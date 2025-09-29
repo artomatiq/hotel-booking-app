@@ -20,7 +20,7 @@ server.use('/api/hotels', hotelsRoute)
 server.use('/api/rooms', roomsRoute)
 
 server.use((err, req, res, next) => {
-    res.status(res.statusCode || 500).json({ message: `Server error: ${err.message}` });
+    res.status(err.status || 500).json({ message: `Server error: ${err.message}` });
 });
 
 module.exports = server

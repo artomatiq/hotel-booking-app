@@ -22,10 +22,10 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    if (!user) next(createError(404, "User not found"));
+    if (!user) return next(createError(404, "User not found"));
 
-    const authenticated = bcrypt.compare(req.body.password, user.password);
-    if (!authenticated) next(createError(400, "Wrong username or password"));
+    const authenticated = await bcrypt.compare(req.body.password, user.password);
+    if (!authenticated) return next(createError(400, "Wrong username or password"));
 
     const { password, isAdmin, ...details } = user._doc;
     const token = jwt.sign(
