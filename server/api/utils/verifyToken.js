@@ -14,4 +14,17 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-module.exports = verifyToken;
+const verifyUser = (req, res, next) => {
+    verifyToken(req, res, () => {
+        if (req.params.id === req.user.id || req.user.isAdmin) {
+            next()
+        } else {
+            next(createError(403, "You are not authorized."))
+        }
+    }) 
+}
+
+module.exports = {
+    verifyToken,
+    verifyUser
+}
