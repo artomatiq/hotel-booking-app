@@ -1,23 +1,28 @@
 const express = require('express')
 const userController = require('../controllers/userController')
-const {verifyToken, verifyUser} = require('../utils/verifyToken')
+const {verifyToken, verifyUser, verifyAdmin} = require('../utils/verifyToken')
 
 const {createUser, getAllUsers, getUserById, updateUser, deleteUser} = userController
 
 const router = express.Router()
 
 //check authentication
-router.get('/me', verifyToken, (req, res, next) => {
+router.get('/checkauthentication', verifyToken, (req, res, next) => {
      res.send("Hello, you are logged in!")
 })
 
-//check authorization
+//check user
 router.get('/checkuser/:id', verifyUser, (req, res, next) => {
-     res.send("You are authorized!")
+     res.send("You are authorized as a user!")
+})
+
+//check admin
+router.get('/checkadmin/:id', verifyAdmin, (req, res, next) => {
+     res.send("You are authorized as an admin!")
 })
 
 //get all users
-router.get('/', getAllUsers)
+router.get('/', verifyAdmin, getAllUsers)
 
 //get single user
 router.get('/:id', getUserById)

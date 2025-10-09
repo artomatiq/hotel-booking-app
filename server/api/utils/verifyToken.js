@@ -24,7 +24,18 @@ const verifyUser = (req, res, next) => {
     }) 
 }
 
+const verifyAdmin = (req, res, next) => {
+    verifyToken(req, res, () => {
+        if (req.user.isAdmin) {
+            next()
+        } else {
+            next(createError(403, "You are not authorized as an admin."))
+        }
+    }) 
+}
+
 module.exports = {
     verifyToken,
-    verifyUser
+    verifyUser,
+    verifyAdmin
 }
