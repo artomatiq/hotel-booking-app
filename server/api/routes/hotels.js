@@ -1,5 +1,6 @@
 const express = require('express')
 const hotelController = require('../controllers/hotelController')
+const {verifyAdmin} = require('../utils/verifyToken')
 
 
 const {createHotel, getAllHotels, getHotelById, updateHotel, deleteHotel} = hotelController
@@ -13,12 +14,12 @@ router.get('/', getAllHotels)
 router.get('/:id', getHotelById)
 
 //create new hotel
-router.post('/', createHotel)
+router.post('/', verifyAdmin, createHotel)
 
 //update hotel
-router.put('/:id', updateHotel)
+router.put('/:id', verifyAdmin, updateHotel)
 
 //delete hotel
-router.delete('/:id', deleteHotel)
+router.delete('/:id', verifyAdmin, deleteHotel)
 
 module.exports = router

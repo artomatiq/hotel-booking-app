@@ -25,15 +25,15 @@ router.get('/checkadmin/:id', verifyAdmin, (req, res, next) => {
 router.get('/', verifyAdmin, getAllUsers)
 
 //get single user
-router.get('/:id', getUserById)
+router.get('/:id', verifyUser, getUserById)
 
 //create new user
-router.post('/', createUser)
+router.post('/', verifyAdmin, createUser)
 
 //update user
-router.put('/:id', updateUser)
+router.put('/:id', verifyUser, updateUser)
 
 //delete user
-router.delete('/:id', deleteUser)
+router.delete('/:id', verifyUser, deleteUser)
 
 module.exports = router
