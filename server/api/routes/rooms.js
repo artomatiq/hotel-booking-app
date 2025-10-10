@@ -14,7 +14,7 @@ router.get('/', getAllRooms)
 router.get('/:id', getRoomById)
 
 //create new room
-router.post('/:id', verifyAdmin, createRoom)
+router.post('/:hotelid', verifyAdmin, createRoom)
 
 //update room
 router.put('/:id', verifyAdmin, updateRoom)
