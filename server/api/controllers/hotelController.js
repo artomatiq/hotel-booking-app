@@ -66,10 +66,33 @@ const deleteHotel = async (req, res, next) => {
   }
 };
 
+const countByCity = async (req, res, next) => {
+  const cities = req.query.cities.split(',')
+  try {
+    const counts = await Promise.all(cities.map(city => {
+      return HotelModel.countDocuments({city: city})
+    }))
+    res.status(200).json(counts);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const countByType = async (req, res, next) => {
+  try {
+    const hotels = await HotelModel.find();
+    res.status(200).json(hotels);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createHotel,
   getAllHotels,
   getHotelById,
   updateHotel,
   deleteHotel,
+  countByCity,
+  countByType
 };
